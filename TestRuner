@@ -1,0 +1,11 @@
+<suite name="Test1" verbose="1">
+	<test name="POMF FrameWork">
+	   <classes>
+		   <class name="com.redbus.qa.TestPage.HomePageTestRed"></class>
+		    <methods>
+				<include name="Booking1"></include>
+			</methods>
+		   
+	   </classes>
+	</test>
+</suite>
