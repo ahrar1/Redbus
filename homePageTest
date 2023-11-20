@@ -1,0 +1,40 @@
+package com.redbus.qa.TestPage;
+
+import java.io.IOException;
+
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import com.redbus.qa.Base.TestBaseRed;
+import com.redbus.qa.Pages.HomePageRed;
+import com.redbus.qa.utility.XLS_datProvied;
+
+public class HomePageTestRed extends TestBaseRed{
+	
+	HomePageRed hp;
+	@BeforeClass
+	public void OpenApp() {
+		openBrowser("Browser");
+		hp = new HomePageRed(driver);
+	}
+	
+	@Test(priority = '1', dataProvider = "testdata")
+	public void Booking1(String from1,String to1) throws InterruptedException{
+
+		
+		hp.Booking(from1,to1);
+		 hp.testDate();
+
+	}
+
+	@DataProvider(name = "testdata")
+	public Object[][] datasupplier() throws IOException {
+
+		Object[][] input = XLS_datProvied.getTestData("Sheet1");
+		return input;
+	}
+
+
+	
+}
