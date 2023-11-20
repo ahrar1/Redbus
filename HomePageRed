@@ -1,0 +1,96 @@
+package com.redbus.qa.Pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class HomePageRed {
+ WebDriver driver;	
+	@FindBy(xpath="//input[@id='src']")
+	WebElement from;
+	
+	@FindBy(xpath="//input[@id='dest']")
+	WebElement to;
+	@FindBy(xpath="//button[text()='SEARCH BUSES']")
+	WebElement search;
+	
+	@FindBy(xpath="//div[text()='View Seats']")
+	WebElement seat;
+	
+	@FindBy(xpath="//span[text()='Bus Photos']")
+	WebElement busphoto;
+	
+	@FindBy(xpath="//span[text()='Boarding & Dropping Points']")
+	WebElement point;
+	
+	public HomePageRed(WebDriver driver) {
+		PageFactory.initElements(driver, this);
+	}
+public void Booking(String from1,String to1) {
+	  
+		from.clear();
+		from.sendKeys(from1);
+		
+		to.clear();
+		to.sendKeys(to1);
+	
+	}
+public void testDate() {
+	 driver.findElement(By.xpath("//*[@id=\"onwardCal\"]/div/div")).click();
+
+       String desired_month = "Nov 2023";
+       String desired_date = "25";
+
+
+
+       while (true) {
+
+           String actual_month = driver.findElement(By.xpath("//*[@id=\"onwardCal\"]/div/div[2]/div/div/div[1]/div[2]")).getText();
+           System.out.println(actual_month);
+           if (actual_month.contains(desired_month)) {
+               System.out.println(actual_month);
+               break;
+
+           } else {
+               driver.findElement(By.xpath("//*[@id=\"onwardCal\"]/div/div[2]/div/div/div[1]/div[3]")).click(); // next month
+           }
+       }
+
+       int column_size = 7; // as per the days (Mon - Sun)
+       int flag = 0;
+       int row_size = driver.findElements(By.xpath("//*[@id=\"onwardCal\"]/div/div[2]/div/div/div[3]/div")).size(); // 8
+       for(int i = 2; i<=row_size; i++){ // row
+
+           for(int j = 1; j<= column_size; j++){ // column
+
+               String actual_date = driver.findElement(By.xpath("//*[@id=\"onwardCal\"]/div/div[2]/div/div/div[3]/div["+i+"]/span/div["+j+"]")).getText();
+
+               if(actual_date.equals(desired_date)){
+                   driver.findElement(By.xpath("//*[@id=\"onwardCal\"]/div/div[2]/div/div/div[3]/div["+i+"]/span/div["+j+"]")).click();
+                   flag = 1; // set flag = 1
+                   //Thread.sleep(3000);
+                   break; // breaking out of inner loop
+               }
+               else{
+                   continue;
+               }
+           }
+           if(flag == 1){ // selection of the date is done
+               break;
+           }
+       }
+       search.click();
+       seat.click();
+		busphoto.click();
+	point.click();
+   }
+		
+		
+	
+
+}
+    
+
+
